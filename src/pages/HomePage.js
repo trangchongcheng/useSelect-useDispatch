@@ -4,18 +4,18 @@ import { addPost, deletePost, initPost } from "../actions/post";
 import todoApi from "../api/todoApi";
 
 const HomePage = () => {
-  const posts = useSelector((state) => state.post.posts);
+  const { posts, loading } = useSelector((state) => state.post);
   const dispatch = useDispatch();
   useEffect(() => {
-    getData();
+    dispatch(initPost());
   }, []);
 
-  const getData = async ()=>{
-    const response = await todoApi.getAll({ _limit: 10 });
-    dispatch(initPost(response));
-  }
+  // const getData = async ()=>{
+  //   const response = await todoApi.getAll({ _limit: 10 });
+  //   dispatch(initPost(response));
+  // }
 
-  const renderPost = () => {
+  const renderPosts = () => {
     return posts.map((item) => {
       return (
         <tr key={item.id}>
@@ -52,6 +52,9 @@ const HomePage = () => {
   const delPost = (id) => {
     dispatch(deletePost(id));
   };
+  if (loading) {
+    return <h1>Loading...</h1>;
+  }
   return (
     <>
       <button className="btn btn-primary mb-2" onClick={add}>
@@ -66,7 +69,7 @@ const HomePage = () => {
             <th scope="col">Action</th>
           </tr>
         </thead>
-        <tbody>{renderPost()}</tbody>
+        <tbody>{renderPosts()}</tbody>
       </table>
     </>
   );
