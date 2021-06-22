@@ -56,7 +56,7 @@ const HomePage = () => {
     return <h1>Loading...</h1>;
   }
   return (
-    <>
+    <div className="container">
       <button className="btn btn-primary mb-2" onClick={add}>
         Add new
       </button>
@@ -71,7 +71,7 @@ const HomePage = () => {
         </thead>
         <tbody>{renderPosts()}</tbody>
       </table>
-    </>
+    </div>
   );
 };
 
